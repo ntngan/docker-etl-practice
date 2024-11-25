@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 import pandas as pd
 import re
@@ -13,7 +12,10 @@ def extract(**kwargs):
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    options.binary_location = '/usr/bin/chromium'
+
+    # Specify the driver path explicitly
+    driver = webdriver.Chrome(service=Service('/usr/bin/chromedriver'), options=options)
 
     # Load the webpage
     driver.get("https://en.wikipedia.org/wiki/List_of_countries_with_KFC_franchises")
@@ -58,4 +60,3 @@ def load(**kwargs):
     utc_plus_7 = timezone(timedelta(hours=7))
     now = datetime.now(utc_plus_7).strftime("%Y-%m-%d_%H-%M-%S")
     df.to_csv(f'./data/{now}.csv', index=False)
-

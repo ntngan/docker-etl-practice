@@ -2,7 +2,6 @@ apache-airflow
 selenium
 requests
 beautifulsoup4
-boto3 
-webdriver_manager
+boto3
 pyarrow
 pandas
